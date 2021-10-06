@@ -1,0 +1,16 @@
+[
+    {
+        "lname": "Батаа",
+        "fname": "Сараа",
+        "email": "test@gmail.com",
+        "role": "Journalist",
+        "imageUrl": "no-photo.jpg",
+        "bannerImage": "no-banner.jpg",
+        "job": "Сэтгүүлч",
+        "_id": "615bc04f7f9db77f21d72376",
+        "createdAt": "2021-10-05T03:02:39.020Z",
+        "name": "Б.Сараа",
+        "__v": 0,
+        "id": "615bc04f7f9db77f21d72376"
+    }
+]

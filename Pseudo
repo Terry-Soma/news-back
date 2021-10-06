@@ -1,0 +1,14 @@
+npm google auth     
+    jwt 
+
+front talaas holbogdson uyd 
+/login endpoint ruu post hiigdene
+user - controller
+
+irsen token iig shalgana 
+verify function ajillaj duusaad aldaagui baih uyd 
+shalgaltiin uyd email verified true bolon baaz dahi email baih avaas hariu cookie ilgeene
+
+send("success") butsaana
+
+tegeed uildel bur deer cookie g shalgaj middleware baidlaar ajilluulna 
