@@ -53,10 +53,10 @@ const UserSchema = new mongoose.Schema({
 }, { toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 
-UserSchema.virtual("publisher", {
+UserSchema.virtual("journalist", {
   ref: "News",
   localField: "_id",
-  foreignField: "publisher",
+  foreignField: "journalist",
   justOne: false
 });
 
