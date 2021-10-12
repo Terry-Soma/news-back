@@ -32,7 +32,7 @@ const UserSchema = new mongoose.Schema({
   role: {
     type: String,
     required: [true, "Хэрэглэгчийн эрхийг оруулна уу"],
-    enum: ["Redakts", "Journalist", "admin"],
+    enum: ["Redakts", "Journalist"],
     default: "Journalist"
   },
   imageUrl: {
@@ -52,12 +52,14 @@ const UserSchema = new mongoose.Schema({
   }
 }, { toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
-UserSchema.virtual("journalist", {
+
+UserSchema.virtual("publisher", {
   ref: "News",
   localField: "_id",
-  foreignField: "journalist",
+  foreignField: "publisher",
   justOne: false
-})
+});
+
 UserSchema.pre("save", function (next) {
   this.name = `${this.lname[0]}.${this.fname}`;
   next();
