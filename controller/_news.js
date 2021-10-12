@@ -2,7 +2,6 @@ const News = require('../models/News');
 const MyError = require('../utils/_errorCatch');
 const asyncHandler = require('../middleware/_asyncHandler');
 const Category = require('../models/Category');
-const { where } = require('../models/News');
 
 
 exports.createNews = asyncHandler(async (req, res, next) => {
