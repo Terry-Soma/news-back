@@ -34,7 +34,7 @@ exports.getUserById = asyncHandler(async (req, res, next) => {
     const user = await User.findOne({ $and: [{ "_id": req.params.id }, { "role": "Journalist" }] });
     /* check */
     if (!user) {
-        throw new MyError("Empty !!!", 400);
+        throw new MyError(req.params.id + " not found", 400);
     }
     res.status(200).json({
         success: true,

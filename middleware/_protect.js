@@ -11,10 +11,6 @@ exports.protect = asyncHandler(async (req, res, next) => {
 
     }
     if (!token) {
-        res.status(401).json({
-            success: false,
-            data: "Энэ үйлдлийг хийхэд таны эрх хүрэхгүй байна"
-        });
         throw new MyError("Энэ үйлдлийг хийхэд таны эрх хүрэхгүй байна", 401);
     }
 

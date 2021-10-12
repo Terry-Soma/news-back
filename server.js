@@ -51,14 +51,14 @@ app.use(morgan('combined', { stream: accessLogStream }))
 app.get('/', function (req, res) {
   res.send('hello, world!')
 })
-app.use(errorHandler);
 
 app.use('/api/v1/categories', categoriesRoutes);
 app.use('/api/v1/news', newsRoutes);
 app.use('/api/v1/user', userRoutes);
+/* errorHandler if throw new error, errorHandler catch it and send*/
+app.use(errorHandler);
 
 
-/* error */
 
 
 const server = app.listen(process.env.PORT || 5001, () => {
