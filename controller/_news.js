@@ -2,6 +2,7 @@ const News = require('../models/News');
 const MyError = require('../utils/_errorCatch');
 const asyncHandler = require('../middleware/_asyncHandler');
 const Category = require('../models/Category');
+const { populate } = require('../models/News');
 
 
 exports.createNews = asyncHandler(async (req, res, next) => {
@@ -16,12 +17,12 @@ exports.createNews = asyncHandler(async (req, res, next) => {
         success: true,
         date: news
     });
-
-
 });
 
 exports.getNews = asyncHandler(async (req, res, next) => {
-    const news = await News.find().populate("journalist", { "_id": 0, "createdAt": 0, "role": 0, lname: 0, fname: 0 });
+    // const news = await News.find().populate("journalist", { "_id": 0, "createdAt": 0, "role": 0, lname: 0, fname: 0 });
+    const news = await News.find().populate(["journalist", "category"]);
+
     if (!news) {
         throw new MyError("Empty", 400);
     }
