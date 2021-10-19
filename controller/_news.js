@@ -3,19 +3,28 @@ const MyError = require('../utils/_errorCatch');
 const asyncHandler = require('../middleware/_asyncHandler');
 const Category = require('../models/Category');
 
+const cloudinary = require('cloudinary');
+
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_NAME,
+    api_key: process.env.CLOUDINARY_KEY,
+    api_secret: process.env.CLOUDINARY_SECRET,
+});
 
 exports.createNews = asyncHandler(async (req, res, next) => {
-    const category = await Category.findById(req.body.category);
+    // const category = await Category.findById(req.body.category);
 
-    if (!category) {
-        throw new MyError(req.body.category + " id not found ", 400);
-    }
-    const news = await News.create(req.body);
-
-    res.status(200).json({
-        success: true,
-        date: news
-    });
+    // if (!category) {
+    // throw new MyError(req.body.category + " id not found ", 400);
+    // }
+    /* destructing */
+    // const news = await News.create(req.body);
+    // const news = new News({ title, });
+    console.log(req.body.content);
+    // res.status(200).json({
+    //     success: true,
+    //     date: news
+    // });
 
 
 });
@@ -98,4 +107,24 @@ exports.deleteNews = asyncHandler(async (req, res, next) => {
         data: news
     })
 
+});
+
+/* imageUpload */
+
+exports.uploadImage = asyncHandler(async (req, res, next) => {
+    /* auth */
+    /*if ((req.userRole !== "Redakts" || req.userRole !== "Admin" || req.userRole !== "Journalist")) {
+        throw new MyError("Таны бичсэн мэдээ биш байна !!!", 401);
+    }*/
+    console.log("req--- file ====>>>>>", req.files);
+    const result = await cloudinary.uploader.upload(req.files.image.path);
+    if (!result) {
+        throw new MyError("Алдаа гарлаа ", 500);
+    }
+    console.log(result);
+    res.status(200).json({
+        success: true,
+        url: result.secure_url,
+        public_id: result.public_id
+    });
 });

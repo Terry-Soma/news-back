@@ -2,6 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const path = require('path');
 const cors = require("cors");
+// const fileupload = require('express-fileupload');
 
 dotenv.config({ path: './config/config.env' });
 
@@ -31,6 +32,9 @@ connectDB();
 const app = express();
 app.use(cors({ origin: true }));
 app.use(express.json());
+app.use(express.json({ limit: '5mb' }));
+app.use(express.urlencoded({ limit: '5mb', extended: true }));
+
 
 
 

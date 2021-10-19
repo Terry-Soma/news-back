@@ -7,10 +7,6 @@ const NewsSchema = new mongoose.Schema({
         trim: true,
         maxlength: [100, "Гарчигийн урт хэтэрлээ Хамгийн ихдээ 50 тэмдэгт байх учиртэй"]
     },
-    content: {
-        type: String,
-        required: [true, "Мэдээний агуулгыг заавал оруулах шаардлагатай"],
-    },
     category: {
         /* relation */
         type: mongoose.Schema.ObjectId,
@@ -21,7 +17,7 @@ const NewsSchema = new mongoose.Schema({
         /* relation */
         type: mongoose.Schema.ObjectId,
         ref: "User",
-        required: true
+        // required: true
     },
     createdAt: {
         type: Date,
@@ -31,8 +27,13 @@ const NewsSchema = new mongoose.Schema({
     smallPicUrl: {
         type: String,
         default: "https://images.unsplash.com/photo-1627780538512-4bf5b6bdff10?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=387&q=80",
+        required: true
     },
-    isLive: Boolean,
+    isLive: {
+        type: Boolean,
+        default: false
+    },
+
     state: {
         type: Boolean,
         default: false
@@ -41,14 +42,15 @@ const NewsSchema = new mongoose.Schema({
         type: String,
         required: [true, " Type оруулна уу"],
         enum: ["L", "S", "X", "M"],
-
+        default: "S"
     },
     fields: [
-        {
-
-        }
+        {}
     ],
-    Ognoo: Date,
+    Ognoo: {
+        type: Date,
+        default: Date.now
+    },
     commentCount: Number,
     shareCount: Number,
     uniqueUrl: {
@@ -58,8 +60,6 @@ const NewsSchema = new mongoose.Schema({
         maxlength: [10, "Url Хаяг хэтэрлээ"]
     },
     viewedCount: Number,
-
-
 }, { toJSON: { virtuals: true }, toObject: { virtuals: true } }
 )
 
