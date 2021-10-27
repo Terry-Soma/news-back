@@ -7,9 +7,9 @@ const { protect, authorize } = require("../middleware/_protect");
 router.route('/').get(getNews)
 router.route('/:url').get(getNewsByUrl);
 
+router.use(protect);
 router.route('/upload-image').post(formidable({ maxFileSize: 5 * 1024 * 1024 }), uploadImage);
 router.route('/').post(createNews);
-router.use(protect);
 
 // router.route('/').post(authorize("Admin", "Redakts", "Journalist"), createNews);
 router.route('/:id').put(authorize("Admin", "Redakts", "Journalist"), updateNewsById).delete(authorize("Admin", "Redakts", "Journalist"), deleteNews);

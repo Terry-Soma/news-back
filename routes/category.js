@@ -1,10 +1,11 @@
 const express = require("express");
 const router = express.Router();
 
-const { createCategory, getCategories, getCategoryById, updateCategory, deleteCategory } = require('../controller/_category');
+const { createCategory, getCategories, getCategoryById, updateCategory, deleteCategory, getCategoriesPublisher } = require('../controller/_category');
 const { protect, authorize } = require('../middleware/_protect');
 
 router.route('/').get(getCategories);
+router.route('/publisher').get(getCategoriesPublisher);
 router.route('/:id').get(getCategoryById);
 
 router.use(protect);

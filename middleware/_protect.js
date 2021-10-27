@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const MyError = require("../utils/_errorCatch");
 const asyncHandler = require("./_asyncHandler");
 exports.protect = asyncHandler(async (req, res, next) => {
+    console.log(req.headers.authorization);
     let token = null;
     if (req.headers.authorization) {
         token = req.headers.authorization.split(' ')[1];

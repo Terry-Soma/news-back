@@ -14,12 +14,13 @@ const errorHandler = (err, req, res, next) => {
         error.message = "Буруу токен ирлээ";
         error.statusCode = 400;
     }
+    if (error.status === 401) {
 
-
+    }
 
     res.status(error.statusCode || 500).json({
         success: false,
-        error,
+        error
     });
 };
 module.exports = errorHandler;

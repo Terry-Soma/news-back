@@ -13,6 +13,30 @@ cloudinary.config({
 
 exports.createNews = asyncHandler(async (req, res, next) => {
     // const category = await Category.findById(req.body.category);
+    console.log(req.body);
+
+    const { image, dog: content, title, categoryId } = req.body;
+
+    if (!content.length) {
+        throw new MyError("Content is required ", 400);
+    }
+    if (!title) {
+        throw new MyError("Title is required", 400);
+    }
+    if (!categoryId) {
+        throw new MyError("Category is required", 400);
+    }
+
+    const news = new News({ title, image, category: categoryId, content, journalist: req.userId });
+    if (!news) {
+        throw new MyError("Cannot create News !!!", 500);
+    }
+    await news.save();
+    res.status(200).json({
+        success: true,
+        data: news
+    });
+
 
     // if (!category) {
     // throw new MyError(req.body.category + " id not found ", 400);
@@ -20,7 +44,8 @@ exports.createNews = asyncHandler(async (req, res, next) => {
     /* destructing */
     // const news = await News.create(req.body);
     // const news = new News({ title, });
-    console.log(req.body.content);
+
+
     // res.status(200).json({
     //     success: true,
     //     date: news
@@ -30,7 +55,9 @@ exports.createNews = asyncHandler(async (req, res, next) => {
 });
 
 exports.getNews = asyncHandler(async (req, res, next) => {
-    const news = await News.find().populate("journalist", { "_id": 0, "createdAt": 0, "role": 0, lname: 0, fname: 0 });
+    const news = await News.find().populate("journalist", "name imageUrl").populate("category", "name");
+    // console.log(req.headers.authorization);
+    // const news = await News.find();
     if (!news) {
         throw new MyError("Empty", 400);
     }
@@ -41,7 +68,7 @@ exports.getNews = asyncHandler(async (req, res, next) => {
 });
 
 exports.getNewsByUrl = asyncHandler(async (req, res, next) => {
-    const news = await News.findOne({ uniqueUrl: req.params.url });
+    const news = await News.findOne({ uniqueUrl: req.params.url }).populate("journalist", "name imageUrl");
     if (!news) {
         throw new MyError(req.params.url + "not found", 404);
     }

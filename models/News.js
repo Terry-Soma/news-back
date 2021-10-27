@@ -5,7 +5,8 @@ const NewsSchema = new mongoose.Schema({
         type: String,
         required: [true, "Гарчиг оруулна уу"],
         trim: true,
-        maxlength: [100, "Гарчигийн урт хэтэрлээ Хамгийн ихдээ 50 тэмдэгт байх учиртэй"]
+        maxlength: [100, "Гарчигийн урт хэтэрлээ Хамгийн ихдээ 100 тэмдэгт байх учиртэй"],
+        unique: true
     },
     category: {
         /* relation */
@@ -24,10 +25,14 @@ const NewsSchema = new mongoose.Schema({
         default: Date.now,
     },
     favCount: Number,
-    smallPicUrl: {
-        type: String,
-        default: "https://images.unsplash.com/photo-1627780538512-4bf5b6bdff10?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=387&q=80",
-        required: true
+    // smallPicUrl: {
+    //     type: String,
+    //     default: "https://images.unsplash.com/photo-1627780538512-4bf5b6bdff10?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=387&q=80",
+    //     required: true,
+    // },
+    image: {
+        url: String,
+        public_id: String,
     },
     isLive: {
         type: Boolean,
@@ -38,15 +43,16 @@ const NewsSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    otype: {
-        type: String,
-        required: [true, " Type оруулна уу"],
-        enum: ["L", "S", "X", "M"],
-        default: "S"
+    // otype: {
+    //     type: String,
+    //     required: [true, " Type оруулна уу"],
+    //     enum: ["L", "S", "X", "M"],
+    //     default: "S"
+    // },
+    content: {
+        type: {},
+        required: [true, "Агуулгаа оруулна уу"],
     },
-    fields: [
-        {}
-    ],
     Ognoo: {
         type: Date,
         default: Date.now

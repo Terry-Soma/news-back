@@ -90,11 +90,11 @@ exports.AuthController = asyncHandler(async (req, res, next) => {
     }
     const user = await User.findOne({ email }).select({ "role": 1, "email": 1, "_id": 1 });
     if (!user) {
-        throw new MyError("Уучлаарай та нэвтрээгүй байна", 401)
+        throw new MyError("Уучлаарай та манай сайтад бүртгэлгүй байна", 401)
     }
 
     const userToken = user.getToken();
-    console.log(userToken);
+    // console.log(userToken);
     const cookieOption = {
         expires: new Date(Date.now() + 30 * 24 * 3600 * 1000),
         httpOnly: true,

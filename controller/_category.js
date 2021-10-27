@@ -21,8 +21,16 @@ exports.getCategories = asyncHandler(async (req, res, next) => {
         success: true,
         data: categories,
     });
-
-
+});
+exports.getCategoriesPublisher = asyncHandler(async (req, res, next) => {
+    const categories = await Category.find().select("name");
+    if (!categories) {
+        throw new MyError("Empty !!!", 404);
+    }
+    res.status(200).json({
+        success: true,
+        data: categories,
+    });
 });
 exports.getCategoryById = asyncHandler(async (req, res, next) => {
     const category = await Category.findById(req.params.id).populate("News");

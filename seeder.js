@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 
 // const Category = require('./models/Category');
-const News = require('./models/News');
+// const News = require('./models/News');
 // const User = require('./models/User');
 
 dotenv.config({ path: './config/config.env' });
