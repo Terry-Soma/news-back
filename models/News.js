@@ -5,7 +5,7 @@ const NewsSchema = new mongoose.Schema({
         type: String,
         required: [true, "Гарчиг оруулна уу"],
         trim: true,
-        maxlength: [100, "Гарчигийн урт хэтэрлээ Хамгийн ихдээ 100 тэмдэгт байх учиртэй"],
+        maxlength: [130, "Гарчигийн урт хэтэрлээ Хамгийн ихдээ 130 тэмдэгт байх учиртэй"],
         unique: true
     },
     category: {

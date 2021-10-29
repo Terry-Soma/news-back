@@ -12,8 +12,7 @@ cloudinary.config({
 });
 
 exports.createNews = asyncHandler(async (req, res, next) => {
-    // const category = await Category.findById(req.body.category);
-    console.log(req.body);
+
 
     const { image, dog: content, title, categoryId } = req.body;
 
@@ -26,7 +25,7 @@ exports.createNews = asyncHandler(async (req, res, next) => {
     if (!categoryId) {
         throw new MyError("Category is required", 400);
     }
-
+    console.log(req.userId);
     const news = new News({ title, image, category: categoryId, content, journalist: req.userId });
     if (!news) {
         throw new MyError("Cannot create News !!!", 500);
@@ -36,33 +35,35 @@ exports.createNews = asyncHandler(async (req, res, next) => {
         success: true,
         data: news
     });
-
-
-    // if (!category) {
-    // throw new MyError(req.body.category + " id not found ", 400);
-    // }
-    /* destructing */
-    // const news = await News.create(req.body);
-    // const news = new News({ title, });
-
-
-    // res.status(200).json({
-    //     success: true,
-    //     date: news
-    // });
-
-
 });
 
 exports.getNews = asyncHandler(async (req, res, next) => {
-    const news = await News.find().populate("journalist", "name imageUrl").populate("category", "name");
-    // console.log(req.headers.authorization);
-    // const news = await News.find();
+    const news = await News.find().sort({ Ognoo: +1 }).populate("journalist", "name imageUrl").populate("category", "name");
     if (!news) {
         throw new MyError("Empty", 400);
     }
     res.status(200).json({
         success: true,
+        data: news
+    })
+});
+exports.getSupNews = asyncHandler(async (req, res, next) => {
+    const news = await News.find().sort({ Ognoo: -1 });
+
+    if (!news) {
+        throw new MyError("Empty", 400);
+    }
+    res.status(200).json({
+        data: news
+    })
+});
+exports.getTrendNews = asyncHandler(async (req, res, next) => {
+    const news = await News.find();
+
+    if (!news) {
+        throw new MyError("Empty", 400);
+    }
+    res.status(200).json({
         data: news
     })
 });
@@ -139,10 +140,7 @@ exports.deleteNews = asyncHandler(async (req, res, next) => {
 /* imageUpload */
 
 exports.uploadImage = asyncHandler(async (req, res, next) => {
-    /* auth */
-    /*if ((req.userRole !== "Redakts" || req.userRole !== "Admin" || req.userRole !== "Journalist")) {
-        throw new MyError("Таны бичсэн мэдээ биш байна !!!", 401);
-    }*/
+
     console.log("req--- file ====>>>>>", req.files);
     const result = await cloudinary.uploader.upload(req.files.image.path);
     if (!result) {

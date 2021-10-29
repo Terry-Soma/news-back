@@ -1,7 +1,7 @@
 const User = require('../models/User');
 const MyError = require('../utils/_errorCatch');
 const asyncHandler = require('../middleware/_asyncHandler');
-
+const News = require('../models/News');
 const { verify } = require('../middleware/_googleOath');
 exports.createUser = asyncHandler(async (req, res, next) => {
 
@@ -57,7 +57,7 @@ exports.updateUser = asyncHandler(async (req, res, next) => {
     user.save();
     res.status(200).json({
         success: true,
-        date: user
+        data: user
     });
 });
 
@@ -73,7 +73,7 @@ exports.deleteUser = asyncHandler(async (req, res, next) => {
     user.remove();
     res.status(200).json({
         success: true,
-        date: user
+        data: user
     });
 });
 
@@ -102,5 +102,19 @@ exports.AuthController = asyncHandler(async (req, res, next) => {
     res.status(200).cookie("news-token", token, cookieOption).json({
         success: true,
         token: userToken,
+    });
+});
+
+
+exports.getUserNews = asyncHandler(async (req, res, nex) => {
+    if (!req.userId) {
+        throw new MyError("Таны эрх хүрэхгүй байна", 401);
+    }
+    console.log(req.userId);
+    const news = await News.find({ journalist: req.userId });
+
+    res.status(200).json({
+        success: true,
+        data: news
     });
 });

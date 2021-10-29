@@ -22,6 +22,7 @@ exports.getCategories = asyncHandler(async (req, res, next) => {
         data: categories,
     });
 });
+
 exports.getCategoriesPublisher = asyncHandler(async (req, res, next) => {
     const categories = await Category.find().select("name");
     if (!categories) {
@@ -32,6 +33,7 @@ exports.getCategoriesPublisher = asyncHandler(async (req, res, next) => {
         data: categories,
     });
 });
+
 exports.getCategoryById = asyncHandler(async (req, res, next) => {
     const category = await Category.findById(req.params.id).populate("News");
 
@@ -42,7 +44,7 @@ exports.getCategoryById = asyncHandler(async (req, res, next) => {
         success: true,
         data: category
     })
-})
+});
 
 exports.updateCategory = asyncHandler(async (req, res, next) => {
     const category = await Category.findByIdAndUpdate(req.params.id, req.body, {
