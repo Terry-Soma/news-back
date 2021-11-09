@@ -106,7 +106,7 @@ exports.AuthController = asyncHandler(async (req, res, next) => {
 });
 
 
-exports.getUserNews = asyncHandler(async (req, res, nex) => {
+exports.getUserNews = asyncHandler(async (req, res, next) => {
     if (!req.userId) {
         throw new MyError("Таны эрх хүрэхгүй байна", 401);
     }
@@ -117,4 +117,12 @@ exports.getUserNews = asyncHandler(async (req, res, nex) => {
         success: true,
         data: news
     });
+});
+exports.userAuth = asyncHandler(async (req, res, next) => {
+    const user = await User.findById(req.userId);
+    // res.json(user);
+    if (!user) {
+        throw new MyError("Та бүртгэлгүй байна.", 401);
+    }
+    res.status(200).json({ ok: true });
 });

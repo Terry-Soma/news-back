@@ -27,5 +27,6 @@ exports.authorize = (...roles) => {
         if (!roles.includes(req.userRole)) {
             throw new MyError("Таны эрх хүрэхгүй байнаа " + req.userRole, 403);
         }
+        next();
     }
 }
